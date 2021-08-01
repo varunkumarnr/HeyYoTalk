@@ -21,7 +21,7 @@ const ChannelSchema = new Schema(
       default: ""
     },
     editable: {
-      type: boolean,
+      type: Boolean,
       default: true
     }
   },

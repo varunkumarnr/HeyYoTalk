@@ -23,14 +23,34 @@ const UserSchema = new Schema({
   //   }
   // ],
   profle_picture: {
-    type: "String",
+    type: String,
     default:
       "https://res.cloudinary.com/varunnrk/image/upload/v1617635408/Alliance%20chat/pic1_jay2ch.jpg"
+  },
+  verified: {
+    type: Boolean,
+    default: false
+  },
+  status: {
+    type: String,
+    default: "online"
   },
   friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
+    }
+  ],
+  friend_req: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ],
+  servers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Server"
     }
   ],
   created_At: {
