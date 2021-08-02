@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connectDB = require("./config/db");
-userRoute = require("./routes/user");
+userRoute = require("./routes/User");
 const PORT = process.env.PORT || 5000;
 connectDB();
 const corsOptions = {
