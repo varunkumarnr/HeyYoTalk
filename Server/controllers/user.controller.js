@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const config = require("../config/db");
+require("dotenv").config();
+const config = process.env.jwtsecret;
 const { validationResult } = require("express-validator");
 const User = require("../models/user");
 const Server = require("../models/Server");
@@ -50,7 +51,7 @@ const signUp = async (req, res) => {
   const createdUser = new User({
     username,
     email,
-    password,
+    password: hashedPassword,
     profle_picture: profileImages[RandomNo],
     servers: [],
     friends: [],
@@ -58,7 +59,23 @@ const signUp = async (req, res) => {
   });
   try {
     await createdUser.save();
-    res.status(200).json({ success: true, data: createdUser });
+    // res.status(200).json({ success: true, data: createdUser });
+    const payload = {
+      user: {
+        id: createdUser.id
+      }
+    };
+    try {
+      jwt.sign(payload, config, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      });
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        errors: [{ msg: "signing up failed, please try again!" }]
+      });
+    }
   } catch (err) {
     return res.status(400).json({
       success: false,
@@ -66,5 +83,121 @@ const signUp = async (req, res) => {
     });
   }
 };
+const Login = async (req, res) => {
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const { email, password } = req.body;
+  let existinguser;
+  try {
+    existinguser = await User.findOne({ email: email });
+    // console.log(existinguser);
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "signing in failed, please try again!" }]
+    });
+  }
+  if (!existinguser) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "Email does not exist, Please signup" }]
+    });
+  }
+  let validPassword;
+  try {
+    validPassword = await bcrypt.compare(password, existinguser.password);
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "signing in failed, please try again!" }]
+    });
+  }
+  if (!validPassword) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "Invalid password, could not login" }]
+    });
+  }
+  const payload = {
+    user: {
+      id: existinguser.id
+    }
+  };
+  jwt.sign(payload, config, { expiresIn: 36000 }, (err, token) => {
+    if (err) throw err;
+    res.json({ token });
+  });
+};
+// profile
+const getUser = async (req, res) => {
+  const username = req.params.username;
+  if (req.query.skip === undefined) {
+    let user;
+    try {
+      user = await User.findOne({ username: username }).select("-password");
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        errors: [{ msg: "Server Error" }]
+      });
+    }
+    if (!user) {
+      return res
+        .status(500)
+        .json({ success: false, errors: [{ msg: "User not found" }] });
+    }
 
-module.exports = { signUp };
+    return res.json(user);
+  }
+};
+// search
+const getUsers = async (req, res) => {
+  const { q, skip, limit, id } = req.query;
+  let users, length;
+  if (limit) {
+    try {
+      users = await User.find({
+        username: { $regex: q },
+        _id: { $ne: id }
+      })
+        .select("username _id")
+        .limit(7);
+    } catch (err) {
+      console.log(err.message);
+      return res
+        .status(500)
+        .json({
+          success: false,
+          errros: [{ msg: "Fetching users failed, please try again" }]
+        });
+    }
+    res.json({
+      users: users.map(user => {
+        return {
+          label: user.name,
+          value: user._id
+        };
+      })
+    });
+  } else {
+    try {
+      length = await User.find(
+        { username: { $regex: q } },
+        "-password"
+      ).countDocuments();
+      users = await User.find({ username: { $regex: q } }, "-password")
+        .skip(parseInt(skip))
+        .limit(5);
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).json({
+        success: false,
+        errors: [{ msg: "Fetching users failed, please try again" }]
+      });
+    }
+    res.json({ users, length });
+  }
+};
+module.exports = { signUp, Login, getUser, getUsers };
