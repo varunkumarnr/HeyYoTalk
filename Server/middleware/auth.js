@@ -13,6 +13,7 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, config);
     req.user = decoded.user;
+    // console.log(decoded.user);
     next();
   } catch (err) {
     res

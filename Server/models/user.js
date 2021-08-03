@@ -35,15 +35,18 @@ const UserSchema = new Schema({
     type: String,
     default: "online"
   },
+  description: {
+    type: String
+  },
   friends: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User"
     }
   ],
   friend_req: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User"
     }
   ],

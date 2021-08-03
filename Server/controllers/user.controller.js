@@ -52,6 +52,7 @@ const signUp = async (req, res) => {
     username,
     email,
     password: hashedPassword,
+    description: "",
     profle_picture: profileImages[RandomNo],
     servers: [],
     friends: [],
@@ -129,6 +130,8 @@ const Login = async (req, res) => {
     if (err) throw err;
     res.json({ token });
   });
+  existinguser.online = true;
+  await existinguser.save();
 };
 // profile
 const getUser = async (req, res) => {
@@ -166,17 +169,15 @@ const getUsers = async (req, res) => {
         .limit(7);
     } catch (err) {
       console.log(err.message);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          errros: [{ msg: "Fetching users failed, please try again" }]
-        });
+      return res.status(500).json({
+        success: false,
+        errros: [{ msg: "Fetching users failed, please try again" }]
+      });
     }
     res.json({
       users: users.map(user => {
         return {
-          label: user.name,
+          label: user.username,
           value: user._id
         };
       })
@@ -200,4 +201,37 @@ const getUsers = async (req, res) => {
     res.json({ users, length });
   }
 };
-module.exports = { signUp, Login, getUser, getUsers };
+const me = async (req, res) => {
+  try {
+    const profile = await User.findById(req.user.id).select("-password");
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ success: false, errors: [{ msg: "user not authenticated" }] });
+    }
+    res.json(profile);
+  } catch (err) {
+    console.log(err.message);
+    return res
+      .status(500)
+      .json({ success: false, errors: [{ msg: "server error" }] });
+  }
+};
+const logout = async (req, res) => {
+  try {
+    await User.findById(req.user.id).then(rUser => {
+      rUser.online = false;
+      rUser.save();
+    });
+    return res.status(200).json({ success: true, msg: "logged out" });
+  } catch (err) {
+    console.log(err.message);
+    return res
+      .status(500)
+      .json({ success: false, errors: [{ msg: "server error" }] });
+  }
+};
+// to do
+// update
+
+module.exports = { signUp, Login, getUser, getUsers, me, logout };

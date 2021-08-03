@@ -8,6 +8,9 @@ var ServerSchema = new Schema(
       unique: true,
       required: true
     },
+    icon: {
+      type: String
+    },
     uniqueId: {
       type: String
     },
