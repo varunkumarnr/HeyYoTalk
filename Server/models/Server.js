@@ -9,9 +9,19 @@ var ServerSchema = new Schema(
       required: true
     },
     icon: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/varunnrk/image/upload/v1628052738/Alliance%20chat/unicorn-plain_cjhaid.png"
+    },
+    // server_id: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Server"
+    // },
+
+    uniqueId: {
       type: String
     },
-    uniqueId: {
+    server_desc: {
       type: String
     },
     owner: {
@@ -31,6 +41,12 @@ var ServerSchema = new Schema(
       }
     ],
     channels: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Channel"
+      }
+    ],
+    voiceChannel: [
       {
         type: Schema.Types.ObjectId,
         ref: "Channel"

@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const connectDB = require("./config/db");
 userRoute = require("./routes/User");
+const serverRoute = require("./routes/Server");
 const PORT = process.env.PORT || 5000;
 connectDB();
 const corsOptions = {
@@ -17,4 +18,5 @@ app.use(express.json());
 //   res.send("hello world");
 // });
 app.use("/api/user", userRoute);
+app.use("/api/server", serverRoute);
 app.listen(PORT, () => console.log(`the server is running at ${PORT}`));

@@ -16,6 +16,10 @@ const ChannelSchema = new Schema(
     uniqueId: {
       type: String
     },
+    // server: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Server"
+    // },
     created_At: {
       type: String,
       default: ""
