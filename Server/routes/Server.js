@@ -22,4 +22,14 @@ router.post(
   auth,
   serverController.createServer
 );
+router.post(
+  "/joinserver",
+  [
+    check("name", "name")
+      .not()
+      .notEmpty()
+  ],
+  auth,
+  serverController.joinServer
+);
 module.exports = router;

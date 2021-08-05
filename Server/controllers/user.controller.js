@@ -209,7 +209,7 @@ const me = async (req, res) => {
         .status(400)
         .json({ success: false, errors: [{ msg: "user not authenticated" }] });
     }
-    res.json(profile);
+    res.json({ success: true, data: profile });
   } catch (err) {
     console.log(err.message);
     return res
