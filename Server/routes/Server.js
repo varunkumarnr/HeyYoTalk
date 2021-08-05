@@ -23,7 +23,7 @@ router.post(
   serverController.createServer
 );
 router.post(
-  "/joinserver",
+  "/joinServer",
   [
     check("name", "name")
       .not()
@@ -32,4 +32,5 @@ router.post(
   auth,
   serverController.joinServer
 );
+router.get("/view/:serverId", auth, serverController.viewServer);
 module.exports = router;

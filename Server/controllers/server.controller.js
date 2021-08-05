@@ -3,6 +3,7 @@ const Server = require("../models/Server");
 const Channel = require("../models/channel");
 const Message = require("../models/Messages");
 const { validationResult } = require("express-validator");
+const Util = require("../middleware/utils");
 const createServer = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -112,7 +113,7 @@ const joinServer = async (req, res) => {
         rUser.save();
         rServer.users.push(userid);
         rServer.save();
-        return res.status(200).json({ success: true, data: rServer });
+        return res.status(200).json("joined");
       });
     });
   } catch (err) {
@@ -123,6 +124,31 @@ const joinServer = async (req, res) => {
   }
 };
 
-// join using link
+//  view server
+const viewServer = async (req, res) => {
+  const getServerId = req.params.serverId;
+  const getUserId = req.user.id;
+  const CheckMem = await Util.isUser(getUserId, getServerId);
+  if (CheckMem === false) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "You must be memmber to view server " }]
+    });
+  }
+  console.log(CheckMem);
+  try {
+    server = await Server.findOne({ _id: getServerId })
+      .populate("channels")
+      .populate("users")
+      .populate("admin")
+      .populate("owner");
+    return res.status(200).json({ success: true, data: server });
+  } catch (err) {
+    console.log(err.message);
+    return res
+      .status(500)
+      .json({ success: false, errors: [{ msg: "server error" }] });
+  }
+};
 
-module.exports = { createServer, joinServer };
+module.exports = { createServer, joinServer, viewServer };
