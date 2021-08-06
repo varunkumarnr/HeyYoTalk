@@ -135,7 +135,7 @@ const viewServer = async (req, res) => {
       errors: [{ msg: "You must be memmber to view server " }]
     });
   }
-  console.log(CheckMem);
+  // console.log(CheckMem);
   try {
     server = await Server.findOne({ _id: getServerId })
       .populate("channels")
@@ -151,4 +151,30 @@ const viewServer = async (req, res) => {
   }
 };
 
-module.exports = { createServer, joinServer, viewServer };
+// deleteServer member
+const deleteServer = async (req, res) => {
+  const CurrentServer = req.params.serverId;
+  const currentUser = req.user.id;
+  const checkOwner = await Util.isOwner(currentUser, CurrentServer);
+  if (checkOwner === false) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "Only owner can delete the server" }]
+    });
+  }
+  try {
+    await Server.findOneAndRemove({ _id: CurrentServer });
+    await Channel.deleteMany({ _id: CurrentServer.channels });
+    const removeIndex = await User.servers
+      .map(item => item.id)
+      .indexOf(CurrentServer);
+    User.servers.splice(removeIndex, 1);
+    return res.status(200).json("deleted");
+  } catch (err) {
+    console.log(err.message);
+    return res
+      .status(500)
+      .json({ success: false, errors: [{ msg: "server error" }] });
+  }
+};
+module.exports = { createServer, joinServer, viewServer, deleteServer };

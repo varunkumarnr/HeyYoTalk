@@ -33,4 +33,5 @@ router.post(
   serverController.joinServer
 );
 router.get("/view/:serverId", auth, serverController.viewServer);
+router.delete("/delete/:serverId", auth, serverController.deleteServer);
 module.exports = router;

@@ -1,9 +1,9 @@
 const User = require("../models/user");
 const Server = require("../models/Server");
-const isAdmin = async (userId, ServerId) => {
-  let CurrentServer = await Server.findById(ServerId);
+const isAdmin = async (userId, serverId) => {
+  let CurrentServer = await Server.findById(serverId);
   let CurrentUser = await User.findById(userId);
-  if (CurrentServer.admin.includes(CurrentUser._id)) {
+  if (CurrentServer.admin.includes(userId)) {
     return true;
   } else {
     return false;
@@ -20,7 +20,7 @@ const isUser = async (userId, serverid) => {
   }
 };
 const isOwner = async (userId, serverId) => {
-  let currentServer = await Server.findById(serverid);
+  let currentServer = await Server.findById(serverId);
   if ((currentServer.owner = userId)) {
     return true;
   } else {
