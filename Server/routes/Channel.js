@@ -16,4 +16,9 @@ router.post(
   auth,
   ChannelContoller.createChannel
 );
+router.delete(
+  "/:serverId/channel/:channelId/delete",
+  auth,
+  ChannelContoller.deleteChannel
+);
 module.exports = router;

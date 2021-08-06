@@ -10,7 +10,6 @@ const createServer = async (req, res) => {
     return res.status(400).json({ success: false, errors: errors.array() });
   }
   const { name } = req.body;
-
   let findExistingServer = await Server.findOne({ name });
   const user = req.user.id;
   if (!user) {

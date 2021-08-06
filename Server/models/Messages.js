@@ -26,5 +26,5 @@ const messageSchema = new Schema({
     default: Date.now
   }
 });
-let channelMessages = mongoose.model("Message", messageSchema);
-module.exports = { channelMessages, EventType };
+let ChannelMessage = mongoose.model("Message", messageSchema);
+module.exports = { ChannelMessage, EventType };

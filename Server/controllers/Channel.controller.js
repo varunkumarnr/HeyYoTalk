@@ -53,5 +53,36 @@ const createChannel = async (req, res) => {
 };
 
 // delete Channel
-
-module.exports = { createChannel };
+const deleteChannel = async (req, res) => {
+  const serverId = req.params.serverId;
+  const channelId = req.params.channelId;
+  const currentUser = req.user.id;
+  const CheckAdmin = await Util.isAdmin(currentUser, serverId);
+  if (CheckAdmin === false) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "Only admins can create new channels" }]
+    });
+  }
+  try {
+    const checkChannel = await Server.findOne({ _id: serverId });
+    // check if that channel in the server exists
+    if (checkChannel.channels.includes(channelId)) {
+      await Channel.findOneAndRemove({ _id: channelId }).then(async data => {
+        await Server.findOne({ _id: serverId }).then(async rServer => {
+          removeIndex = rServer.channels
+            .map(item => item.id)
+            .indexOf(channelId);
+          rServer.channels.splice(removeIndex, 1);
+          await rServer.save();
+        });
+        return res.json("deleted");
+      });
+    }
+    return res.json("no such channel");
+  } catch (err) {
+    console.log(err.message);
+    res.send("server error");
+  }
+};
+module.exports = { createChannel, deleteChannel };

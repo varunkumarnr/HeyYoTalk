@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 userRoute = require("./routes/User");
 const serverRoute = require("./routes/Server");
 const channelRoute = require("./routes/Channel");
+const MessageRoute = require("./routes/Messages");
 const PORT = process.env.PORT || 5000;
 connectDB();
 const corsOptions = {
@@ -21,4 +22,5 @@ app.use(express.json());
 app.use("/api/user", userRoute);
 app.use("/api/server", serverRoute);
 app.use("/api/server", channelRoute);
+app.use("/api/server", MessageRoute);
 app.listen(PORT, () => console.log(`the server is running at ${PORT}`));
