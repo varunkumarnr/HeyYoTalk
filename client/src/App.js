@@ -1,7 +1,12 @@
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import { HomePage } from "./Pages/HomePage";
 function App() {
   return (
     <div className='App'>
-      <h1>I am working</h1>
+      <Router>
+        <Route path='/' component={HomePage}></Route>
+      </Router>
     </div>
   );
 }

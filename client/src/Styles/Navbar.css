@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Cuprum:wght@500&display=swap");
+:root {
+  --font-primary: #fff;
+  --font-secondary: #c8c8c9;
+  --font-tertiary: #4a4a4e;
+  --border-primary: #48484c;
+  --text-hover-color: #fff;
+  --button-hover: #667bc4;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  text-align: center;
+  padding-top: 30px;
+  padding-left: 40px;
+  background: #26252b;
+  z-index: 10000;
+  color: #fff;
+  justify-content: space-between;
+  user-select: none;
+  transition: 0.4s ease-in-out;
+}
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.logo-wrapper img {
+  height: 45px;
+  width: 45px;
+  margin-right: 10px;
+
+  cursor: pointer;
+}
+.logo-text-wrapper {
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+.logo-text-wrapper h1 {
+  font-family: "Cuprum", sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+}
+.logo-text-wrapper h1 span {
+  color: #ff0158;
+  font-family: "Cuprum", sans-serif;
+}
+.nav-right ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.navbar-socials a {
+  padding: 0 10px;
+  font-size: 20px;
+  color: var(--font-primary);
+}
+li.login-link-container {
+  margin-left: 10px;
+  padding-left: 20px;
+  border-left: 1px solid var(--border-primary);
+}
+
+.nav-right li:hover {
+  color: var(--text-hover-color);
+}
+
+.login-link {
+  padding: 6.5px 16.5px;
+  border: 2px solid var(--font-secondary);
+  border-radius: 17px;
+  text-decoration: none;
+  color: inherit;
+  margin-right: 10px;
+}
+
+.login-link:hover {
+  border-color: var(--text-hover-color);
+}
+@media (max-width: 500px) {
+  .logo-text-wrapper {
+    font-size: 16px;
+    letter-spacing: 0px;
+  }
+  .navbar-socials a {
+    font-size: 12px;
+    padding: 0px 8px;
+  }
+  .login-link {
+    margin-right: 5px;
+  }
+  li.login-link-container {
+    margin-left: 5px;
+    padding-left: 10px;
+  }
+}
+@media (max-width: 370px) {
+  .navbar-socials a {
+    display: none;
+  }
+}

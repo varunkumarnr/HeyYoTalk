@@ -1,0 +1,104 @@
+:root {
+  --font-primary: #fff;
+  --font-secondary: #c8c8c9;
+  --font-tertiary: #4a4a4e;
+  --border-primary: #48484c;
+  --text-hover-color: #fff;
+  --button-hover: #818597;
+}
+
+.HomePage-container {
+  background-color: #26252b;
+  width: 100vw;
+}
+.HomePage-content {
+  margin: 125px auto 0 auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--font-primary);
+  line-height: 1.5em;
+  text-align: center;
+}
+.HomePage-content h1,
+p {
+  user-select: none;
+  line-height: 1em;
+}
+.HomePage-content h1 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+.HomePage-content p {
+  margin-bottom: 30px;
+  color: var(--font-secondary);
+}
+#content-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
+  grid-column-gap: 40px;
+  grid-row-gap: 10px;
+  justify-content: center;
+  justify-items: center;
+  animation: fadein 2s;
+}
+
+#content-buttons a button {
+  width: 250px;
+  height: 45px;
+  font-size: 1.05em;
+  border-radius: 4px;
+  background-color: #7289da;
+  border: none;
+  color: var(--font-primary);
+  cursor: pointer;
+  position: relative;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#content-buttons a:first-of-type button {
+  background-color: white;
+  color: var(--font-tertiary);
+}
+
+#content-buttons a button:hover {
+  top: 1px;
+  transition: top 2s;
+}
+
+.HomePage-Image-container {
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #26252b;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  background: #26252b;
+}
+.Home-image {
+  min-height: 250px;
+  width: 98vw;
+}
+@media (max-width: 850px) {
+  .HomePage-content {
+    width: 80%;
+  }
+}
