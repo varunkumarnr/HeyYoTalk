@@ -46,9 +46,18 @@
   font-weight: 600;
   font-size: 30px;
 }
-.logo-text-wrapper h1 span {
+/* .logo-text-wrapper h1 span {
   color: #ff0158;
   font-family: "Cuprum", sans-serif;
+} */
+.appTitle1 {
+  color: #02b0ee;
+}
+/* .appTitle2 {
+  color: #2c1e74;
+} */
+.appTitle3 {
+  color: #c94ce9;
 }
 .nav-right ul {
   display: flex;
@@ -99,7 +108,7 @@ li.login-link-container {
     padding-left: 10px;
   }
 }
-@media (max-width: 370px) {
+@media (max-width: 380px) {
   .navbar-socials a {
     display: none;
   }

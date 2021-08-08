@@ -14,8 +14,8 @@ export const HomeComponent = () => {
           <p>
             Presenting All-in-One voice, text-chat for gamers and nerds, its
             free, its secure, it works(sometimes), and its open source. Time to
-            say bye to corporate companies, simply your life with{" "}
-            <span>HeyYoTalk</span>
+            say bye to corporate companies, simplify your life with
+            <span> HeyYoTalk</span>
           </p>
           <div id='content-buttons'>
             <a href='https://github.com/varunkumarnr/HeyYoTalk'>

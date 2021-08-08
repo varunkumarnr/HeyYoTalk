@@ -94,7 +94,7 @@ p {
   background: #26252b;
 }
 .Home-image {
-  min-height: 250px;
+  min-height: auto;
   width: 98vw;
 }
 @media (max-width: 850px) {

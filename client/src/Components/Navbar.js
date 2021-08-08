@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../images/unicorn.png";
+import logo from "../images/logo.png";
 import "../Styles/Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,7 +17,9 @@ export const Navbar = () => {
             <img src={logo} alt='logo' />
             <div className='logo-text-wrapper'>
               <h1>
-                Hey<span>Yo</span>Talk
+                <span className='appTitle1'>Hey</span>
+                <span className='appTitle2'>Yo</span>
+                <span className='appTitle3'>Talk</span>
               </h1>
             </div>
           </div>
