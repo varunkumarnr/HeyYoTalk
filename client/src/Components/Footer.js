@@ -11,7 +11,7 @@ export const Footer = () => {
           <p>Join over a community of 10 gamers.</p>
         </div>
         <div id='right-footer'>
-          <Link to='/signup'>
+          <Link to='/register'>
             <button>Sign Up Now</button>
           </Link>
         </div>
