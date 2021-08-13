@@ -137,6 +137,23 @@
   padding: 2px 16px;
   cursor: pointer;
 }
+.forgot-password {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+.forgot-password a {
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #7289da;
+  margin-left: 4px;
+}
+.forgot-password a:hover {
+  text-decoration: underline;
+}
 .Auth-Redirect {
   margin-top: 4px;
   font-size: 14px;

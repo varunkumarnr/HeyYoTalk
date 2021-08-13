@@ -5,6 +5,12 @@
   background: var(--light-color);
   color: #333;
 }
+:root {
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
+
 .alert-danger {
   background: var(--danger-color);
   color: #fff;

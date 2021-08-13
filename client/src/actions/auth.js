@@ -35,8 +35,8 @@ export const loadUser = () => async dispatch => {
 
 export const register = FormData => async dispatch => {
   try {
-    const res = axios.post(URL + "/api/user/signup", FormData);
-    console.log(URL, FormData);
+    const res = await axios.post(URL + "/api/user/signup", FormData);
+    // console.log(URL, FormData);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
@@ -47,6 +47,7 @@ export const register = FormData => async dispatch => {
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
     }
+
     dispatch({
       type: REGISTER_FAIL
     });
@@ -61,7 +62,7 @@ export const login = (email, password) => async dispatch => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = axios.post(URL + "/api/user/login", body, config);
+    const res = await axios.post(URL + "/api/user/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
