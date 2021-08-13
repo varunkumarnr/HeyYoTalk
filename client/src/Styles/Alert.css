@@ -1,0 +1,15 @@
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--light-color);
+  color: #333;
+}
+.alert-danger {
+  background: var(--danger-color);
+  color: #fff;
+}
+.alert-success {
+  background: var(--success-color);
+  color: white;
+}

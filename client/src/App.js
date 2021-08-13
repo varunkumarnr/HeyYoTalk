@@ -4,6 +4,10 @@ import store from "./store";
 import { HomePage } from "./Pages/HomePage";
 import Register from "./Components/Register";
 import { Login } from "./Components/Login";
+import setAuthToken from "./util/SetAuthToken";
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 function App() {
   return (
     <div className='App'>

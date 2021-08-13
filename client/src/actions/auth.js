@@ -36,6 +36,7 @@ export const loadUser = () => async dispatch => {
 export const register = FormData => async dispatch => {
   try {
     const res = axios.post(URL + "/api/user/signup", FormData);
+    console.log(URL, FormData);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
