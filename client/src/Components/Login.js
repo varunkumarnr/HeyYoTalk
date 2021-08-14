@@ -19,10 +19,9 @@ const Login = ({ setAlert, login, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     login(email, password);
-    console.log(email, password);
   };
   if (isAuthenticated) {
-    return <Redirect to='/@me'></Redirect>;
+    return <Redirect to='/channels/@me'></Redirect>;
   }
   return (
     <div className='Auth-Form'>

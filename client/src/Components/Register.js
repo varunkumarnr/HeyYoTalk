@@ -20,10 +20,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault();
     register({ username, email, password });
-    console.log(username, email, password);
+    // console.log(username, email, password);
   };
   if (isAuthenticated) {
-    return <Redirect to='/@me'></Redirect>;
+    return <Redirect to='/channels/@me'></Redirect>;
   }
   return (
     <div className='Auth-Form'>
