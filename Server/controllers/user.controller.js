@@ -221,13 +221,16 @@ const userServers = async (req, res) => {
   try {
     const currentUser = await User.findById(req.user.id).populate(
       "servers",
-      "-admin -users -channels -voiceChannel -owner"
+      "-admin -users  -voiceChannel -owner"
     );
     const myServer = currentUser.servers;
     console.log(myServer);
     return res.json(myServer);
   } catch (err) {
     console.log(err.message);
+    return res
+      .status(500)
+      .json({ success: false, errors: [{ msg: "server error" }] });
   }
 };
 const logout = async (req, res) => {
