@@ -43,6 +43,7 @@ export const createServer = name => async dispatch => {
 export const getUserServers = () => async dispatch => {
   try {
     const res = await axios.get(URL + "/api/user/me");
+    console.log(res.data);
     dispatch({
       type: GET_USER_SERVERS,
       payload: res.data.data.servers

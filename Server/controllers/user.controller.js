@@ -217,6 +217,19 @@ const me = async (req, res) => {
       .json({ success: false, errors: [{ msg: "server error" }] });
   }
 };
+const userServers = async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.user.id).populate(
+      "servers",
+      "-admin -users -channels -voiceChannel -owner"
+    );
+    const myServer = currentUser.servers;
+    console.log(myServer);
+    return res.json(myServer);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 const logout = async (req, res) => {
   try {
     await User.findById(req.user.id).then(rUser => {
@@ -234,4 +247,4 @@ const logout = async (req, res) => {
 // to do
 // update
 
-module.exports = { signUp, Login, getUser, getUsers, me, logout };
+module.exports = { signUp, Login, getUser, getUsers, me, userServers, logout };

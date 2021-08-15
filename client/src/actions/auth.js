@@ -21,6 +21,7 @@ export const loadUser = () => async dispatch => {
   }
   try {
     const res = await axios.get(URL + "/api/user/me");
+    // console.log(res.data.data.servers);
     dispatch({
       type: USER_LOADED,
       payload: res.data

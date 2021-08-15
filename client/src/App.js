@@ -7,6 +7,7 @@ import { HomePage } from "./Pages/HomePage";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
 import setAuthToken from "./util/SetAuthToken";
+import { MainPage } from "./Pages/MainPage";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -22,6 +23,7 @@ function App() {
           <Switch>
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
+            <Route path='/channels' component={MainPage} />
           </Switch>
         </Router>
       </Provider>

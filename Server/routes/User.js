@@ -42,5 +42,6 @@ router.post(
 router.get("/profile/:username", userController.getUser);
 router.get("/", userController.getUsers);
 router.get("/me", auth, userController.me);
+router.get("/servers", auth, userController.userServers);
 router.get("/logout", auth, userController.logout);
 module.exports = router;
