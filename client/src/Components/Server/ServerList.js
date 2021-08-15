@@ -24,6 +24,7 @@ const ServerList = ({ getUserServers, server: { loading, guilds } }) => {
         </Link>
       </div>
       <span className='divider'></span>
+      div
     </div>
   );
 };

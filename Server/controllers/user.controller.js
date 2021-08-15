@@ -221,7 +221,7 @@ const userServers = async (req, res) => {
   try {
     const currentUser = await User.findById(req.user.id).populate(
       "servers",
-      "-admin -users  -voiceChannel -owner"
+      "-admin -users -voiceChannel -owner"
     );
     const myServer = currentUser.servers;
     console.log(myServer);
