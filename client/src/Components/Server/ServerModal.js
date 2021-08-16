@@ -10,18 +10,18 @@ const ServerModal = ({ error, guild, createServer, joinServer }) => {
   const [state, setState] = useState(" ");
   const [name, setName] = useState(" ");
   const [type, setType] = useState("null");
-
+  const modified = name.replace(/^\s+|\s+$/g, " ");
   useEffect(() => {
     console.log(type);
-  }, [type]);
+  }, [type, name]);
   const onSubmit = async e => {
     e.preventDefault();
     setState("loading");
     let data;
     if (type === "create") {
-      data = await createServer(name);
+      data = await createServer(modified);
     } else if (type === "join") {
-      data = await joinServer(name);
+      data = await joinServer(modified);
     }
     if (data._id) {
       closeModal("create-guild-modal");

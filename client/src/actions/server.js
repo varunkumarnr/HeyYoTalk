@@ -79,6 +79,7 @@ export const joinServer = name => async dispatch => {
       type: JOIN_SERVER,
       payload: res.data.data
     });
+    console.log(res.data.data);
     dispatch(setAlert("Server Joined", "success"));
     return res.data.data;
   } catch (err) {
