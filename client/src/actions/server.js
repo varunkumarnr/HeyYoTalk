@@ -17,6 +17,7 @@ export const createServer = name => async dispatch => {
     }
   };
   const body = JSON.stringify({ name });
+  // console.log(body);
   try {
     const res = await axios.post(
       URL + "/api/server/createserver",
@@ -25,9 +26,11 @@ export const createServer = name => async dispatch => {
     );
     dispatch({
       type: CREATE_SERVER,
-      payload: res.data
+      payload: res.data.data
     });
+
     dispatch(setAlert("Server Created", "success"));
+    return res.data.data;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -74,9 +77,10 @@ export const joinServer = name => async dispatch => {
     const res = await axios.post(URL + "/api/server/joinserver", body, config);
     dispatch({
       type: JOIN_SERVER,
-      payload: res.data
+      payload: res.data.data
     });
     dispatch(setAlert("Server Joined", "success"));
+    return res.data.data;
   } catch (err) {
     console.log(err.message);
     const errors = err.response.data.errors;

@@ -112,7 +112,7 @@ const joinServer = async (req, res) => {
         rUser.save();
         rServer.users.push(userid);
         rServer.save();
-        return res.status(200).json("joined");
+        return res.status(200).json({ success: true, data: rServer });
       });
     });
   } catch (err) {
