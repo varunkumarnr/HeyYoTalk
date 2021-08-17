@@ -7,7 +7,7 @@ export const closeModal = id => {
 };
 export const openModal = id => {
   const element = document.querySelector(`#${id}`);
-  console.log(element);
+
   element.classList.add("active");
   // element.setAttribute("data-payload", JSON.stringify(payload));
   document.querySelector(`#style-${id}`).classList.remove("closed");

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { useHistory, Redirect } from "react-router";
+import { Redirect } from "react-router";
 import { joinServer, createServer } from "../../actions/server";
 import { Modal } from "./Modal";
 import { closeModal } from "../../util/Util";
+import ModalImage from "../../images/discordmodal.gif";
 import "../../Styles/ServerModal.css";
 const ServerModal = ({ error, guild, createServer, joinServer }) => {
-  const [state, setState] = useState(" ");
-  const [name, setName] = useState(" ");
+  const [state, setState] = useState("");
+  const [name, setName] = useState("");
   const [type, setType] = useState("null");
   const modified = name.replace(/^\s+|\s+$/g, " ");
   useEffect(() => {
@@ -34,13 +35,23 @@ const ServerModal = ({ error, guild, createServer, joinServer }) => {
   return (
     <Modal id='create-guild-modal' title='Create a server'>
       {type === "null" ? (
-        <>
+        <div className='server-modal-container'>
+          <div className='Modal-server-img'>
+            <img src={ModalImage} alt='join gif' />
+          </div>
+
           <div className='modal_body'>
             <div className='select-type'>
-              <button className='btn blue' onClick={() => setType("create")}>
+              <button
+                className='create-server-btn'
+                onClick={() => setType("create")}
+              >
                 Create Server
               </button>
-              <button className='btn blue' onClick={() => setType("join")}>
+              <button
+                className='create-server-btn'
+                onClick={() => setType("join")}
+              >
                 Join Server
               </button>
             </div>
@@ -49,12 +60,12 @@ const ServerModal = ({ error, guild, createServer, joinServer }) => {
             <button
               onClick={() => closeModal("create-guild-modal")}
               type='button'
-              className='btn blue'
+              className='cancel-btn-modal'
             >
               Cancel
             </button>
           </div>
-        </>
+        </div>
       ) : null}
       {type === "create" ? (
         <>

@@ -82,11 +82,10 @@ const joinServer = async (req, res) => {
       ]
     });
   }
-  let joinedUser =
-    CheckServer &&
-    CheckServer.users.filter(async ruser => {
-      return await ruser;
-    });
+  let ServerUsers = await Server.findOne({
+    name: name
+  });
+  let joinedUser = ServerUsers.users;
   console.log(joinedUser);
   try {
     if (joinedUser.includes(currentUser._id)) {
@@ -96,25 +95,41 @@ const joinServer = async (req, res) => {
       });
     }
 
-    const server = await Server.findOneAndUpdate({
+    const server = await Server.findOne({
       name: name
-    }).then(rServer => {
-      // console.log(rServer._id);
-      const numberUser = rServer.users.lenght;
-      if (numberUser > 40) {
-        return res.status(400).json({
-          success: false,
-          errors: [{ msg: "The server as reached max participants limit" }]
-        });
-      }
-      let userEntry = User.findById(userid).then(rUser => {
-        rUser.servers.push(rServer._id);
-        rUser.save();
-        rServer.users.push(userid);
-        rServer.save();
-        return res.status(200).json({ success: true, data: rServer });
-      });
     });
+    const numberofUser = server.users.lenght;
+    console.log(numberofUser);
+    if (numberofUser > 30) {
+      return res.status(400).json({
+        success: false,
+        errors: [{ msg: "The server as reached max participants limit" }]
+      });
+    }
+    let joiningUser = await User.findById(userid);
+    joiningUser.servers.push(server._id);
+    await joiningUser.save();
+    server.users.push(userid);
+    await server.save();
+    return res.status(200).json({ success: true, data: server });
+    // .then(rServer => {
+    //   // console.log(rServer._id);
+    //   const numberUser = rServer.users.lenght;
+    //   if (numberUser > 40) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       errors: [{ msg: "The server as reached max participants limit" }]
+    //     });
+    //   }
+    //   let userEntry = User.findById(userid).then(rUser => {
+    //     rUser.servers.push(rServer._id);
+    //     rUser.save();
+    //     rServer.users.push(userid);
+    //     rServer.save();
+    //
+    //   });
+    // }
+    // );
   } catch (err) {
     console.log(err.message);
     return res

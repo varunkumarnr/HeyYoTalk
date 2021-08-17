@@ -16,7 +16,7 @@
   font-size: 12px !important;
   /* Position the tooltip text - see examples below! */
   position: absolute;
-  z-index: 1;
+  z-index: 100;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */

@@ -15,13 +15,17 @@ export const Modal = ({ id, title, children }) => {
     <div>
       <div id={id} className='modal modal_container'>
         <div id={`style-${id}`} className='modal_style'>
-          <header className='header'>
-            <h1>{title}</h1>
-            <button onClick={() => closeModal(id)} className='close_modal'>
-              {XIcon}
-            </button>
-          </header>
-          {children}
+          <div className='modal_openup'>
+            <header className='modal-header'>
+              <div>
+                <h1>{title}</h1>
+                <button onClick={() => closeModal(id)} className='close_modal'>
+                  X
+                </button>
+              </div>
+            </header>
+            {children}
+          </div>
         </div>
       </div>
     </div>
