@@ -18,7 +18,7 @@ const createChannel = async (req, res) => {
   if (CheckAdmin === false) {
     return res.status(400).json({
       success: false,
-      errors: [{ msg: "Only admins can create new channels" }]
+      errors: [{ msg: "Only admins can create new channels" }],
     });
   }
   try {
@@ -27,24 +27,22 @@ const createChannel = async (req, res) => {
     // });
     // await newChannel.save();
     let server = await Server.findOneAndUpdate({
-      _id: currentServerId
-    }).then(async rServer => {
+      _id: currentServerId,
+    }).then(async (rServer) => {
       const numberOfChannels = rServer.channels.length;
       if (numberOfChannels > 8) {
         return res.status(400).json({
           success: false,
-          errors: [{ msg: "8 is the maximum number of channels" }]
+          errors: [{ msg: "8 is the maximum number of channels" }],
         });
       }
       let newChannel = new Channel({
-        channel_name: channel_name
+        channel_name: channel_name,
       });
       await newChannel.save();
       rServer.channels.push(newChannel._id);
       await rServer.save();
-      return res
-        .status(200)
-        .json({ success: true, data: "Channel successfully created" });
+      return res.status(200).json({ success: true, data: newChannel });
     });
   } catch (err) {
     console.log(err.message);
@@ -61,17 +59,17 @@ const deleteChannel = async (req, res) => {
   if (CheckAdmin === false) {
     return res.status(400).json({
       success: false,
-      errors: [{ msg: "Only admins can create new channels" }]
+      errors: [{ msg: "Only admins can create new channels" }],
     });
   }
   try {
     const checkChannel = await Server.findOne({ _id: serverId });
     // check if that channel in the server exists
     if (checkChannel.channels.includes(channelId)) {
-      await Channel.findOneAndRemove({ _id: channelId }).then(async data => {
-        await Server.findOne({ _id: serverId }).then(async rServer => {
+      await Channel.findOneAndRemove({ _id: channelId }).then(async (data) => {
+        await Server.findOne({ _id: serverId }).then(async (rServer) => {
           removeIndex = rServer.channels
-            .map(item => item.id)
+            .map((item) => item.id)
             .indexOf(channelId);
           rServer.channels.splice(removeIndex, 1);
           await rServer.save();

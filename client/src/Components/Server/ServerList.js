@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { makeStyles, IconButton, Avatar } from "@material-ui/core";
 import { Link, useParams } from "react-router-dom";
-import AddIcon from "@material-ui/icons/Add";
-import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import Logo from "../../images/logo.png";
 import { getUserServers } from "../../actions/server";
 import PropTypes from "prop-types";
 import { ServerTooltip } from "../Server/ServerTooltip";
 import { openModal } from "../../util/Util";
 import "../../Styles/Server.css";
-import ServerModal from "./ServerModal";
 const ServerList = ({ getUserServers, server: { loading, guilds } }) => {
   const { serverId } = useParams();
   useEffect(() => {
@@ -29,7 +25,7 @@ const ServerList = ({ getUserServers, server: { loading, guilds } }) => {
       </div>
       <span className='divider'></span>
       <div className='userserverList'>
-        {guilds.map(guild => {
+        {guilds.map((guild) => {
           // const isActive = serverId?serverId === guild._id;
           // active code to be done
           return (
@@ -60,9 +56,9 @@ const ServerList = ({ getUserServers, server: { loading, guilds } }) => {
 
 ServerList.propTypes = {
   getUserServers: PropTypes.func.isRequired,
-  server: PropTypes.object.isRequired
+  server: PropTypes.object.isRequired,
 };
-const mapStateToprops = state => ({
-  server: state.server
+const mapStateToprops = (state) => ({
+  server: state.server,
 });
 export default connect(mapStateToprops, { getUserServers })(ServerList);
