@@ -49,7 +49,32 @@ const createChannel = async (req, res) => {
     return res.status(400).json({ success: false, msg: "server error" });
   }
 };
-
+const getChannelById = async (req, res) => {
+  const serverId = req.params.serverId;
+  const channelId = req.params.channelId;
+  const currentUser = req.user.id;
+  const checkIsUser = await Util.isUser(currentUser, serverId);
+  if (checkIsUser === false) {
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "You must be member to see the channel" }],
+    });
+  }
+  try {
+    const checkChannel = await Server.findOne({ _id: serverId });
+    if (checkChannel.channels.includes(channelId)) {
+      const data = await Channel.findById(channelId);
+      return res.status(200).json({ success: true, data: data });
+    }
+    return res.status(400).json({
+      success: false,
+      errors: [{ msg: "no such channel" }],
+    });
+  } catch (err) {
+    console.log(err.message);
+    return res.status(400).json({ success: false, msg: "server error" });
+  }
+};
 // delete Channel
 const deleteChannel = async (req, res) => {
   const serverId = req.params.serverId;
@@ -83,4 +108,4 @@ const deleteChannel = async (req, res) => {
     res.send("server error");
   }
 };
-module.exports = { createChannel, deleteChannel };
+module.exports = { createChannel, deleteChannel, getChannelById };

@@ -8,11 +8,7 @@ router.get("/", (req, res) => {
 });
 router.post(
   "/:serverId/channel/new",
-  [
-    check("channel_name", "channel name is required")
-      .not()
-      .notEmpty()
-  ],
+  [check("channel_name", "channel name is required").not().notEmpty()],
   auth,
   ChannelContoller.createChannel
 );
@@ -20,5 +16,10 @@ router.delete(
   "/:serverId/channel/:channelId/delete",
   auth,
   ChannelContoller.deleteChannel
+);
+router.get(
+  "/:serverId/channel/:channelId",
+  auth,
+  ChannelContoller.getChannelById
 );
 module.exports = router;
