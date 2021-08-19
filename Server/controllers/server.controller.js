@@ -15,18 +15,18 @@ const createServer = async (req, res) => {
   if (!user) {
     return res.status(500).json({
       success: false,
-      errors: [{ msg: "user not authenticated" }]
+      errors: [{ msg: "user not authenticated" }],
     });
   }
   if (findExistingServer) {
     return res.status(500).json({
       success: false,
-      errors: [{ msg: "Server name already exists" }]
+      errors: [{ msg: "Server name already exists" }],
     });
   }
   try {
     let DefaultChannel = new Channel({
-      channel_name: "general"
+      channel_name: "general",
     });
     await DefaultChannel.save();
     let newServer = new Server({
@@ -34,10 +34,10 @@ const createServer = async (req, res) => {
       owner: user,
       admin: user,
       users: user,
-      channels: DefaultChannel._id
+      channels: DefaultChannel._id,
     });
     await newServer.save();
-    User.findById(user).then(rUser => {
+    User.findById(user).then((rUser) => {
       rUser.servers.push(newServer._id);
       rUser.save();
     });
@@ -50,9 +50,8 @@ const createServer = async (req, res) => {
       .json({ success: false, errors: [{ msg: "server error" }] });
   }
 };
-// coin using unique code
+// join using unique code
 
-// not working
 const joinServer = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -66,7 +65,7 @@ const joinServer = async (req, res) => {
   if (!userid) {
     return res.status(500).json({
       success: false,
-      errors: [{ msg: "user not authenticated" }]
+      errors: [{ msg: "user not authenticated" }],
     });
   }
   // console.log(name);
@@ -77,13 +76,13 @@ const joinServer = async (req, res) => {
       success: false,
       errors: [
         {
-          msg: "No such server"
-        }
-      ]
+          msg: "No such server",
+        },
+      ],
     });
   }
   let ServerUsers = await Server.findOne({
-    name: name
+    name: name,
   });
   let joinedUser = ServerUsers.users;
   console.log(joinedUser);
@@ -91,19 +90,19 @@ const joinServer = async (req, res) => {
     if (joinedUser.includes(currentUser._id)) {
       return res.status(400).json({
         success: false,
-        errors: [{ msg: " your are already in the server" }]
+        errors: [{ msg: " your are already in the server" }],
       });
     }
 
     const server = await Server.findOne({
-      name: name
+      name: name,
     });
     const numberofUser = server.users.lenght;
     console.log(numberofUser);
     if (numberofUser > 30) {
       return res.status(400).json({
         success: false,
-        errors: [{ msg: "The server as reached max participants limit" }]
+        errors: [{ msg: "The server as reached max participants limit" }],
       });
     }
     let joiningUser = await User.findById(userid);
@@ -146,7 +145,7 @@ const viewServer = async (req, res) => {
   if (CheckMem === false) {
     return res.status(400).json({
       success: false,
-      errors: [{ msg: "You must be memmber to view server " }]
+      errors: [{ msg: "You must be memmber to view server " }],
     });
   }
   // console.log(CheckMem);
@@ -173,14 +172,14 @@ const deleteServer = async (req, res) => {
   if (checkOwner === false) {
     return res.status(400).json({
       success: false,
-      errors: [{ msg: "Only owner can delete the server" }]
+      errors: [{ msg: "Only owner can delete the server" }],
     });
   }
   try {
     await Server.findOneAndRemove({ _id: CurrentServer });
     await Channel.deleteMany({ _id: CurrentServer.channels });
     const removeIndex = await User.servers
-      .map(item => item.id)
+      .map((item) => item.id)
       .indexOf(CurrentServer);
     User.servers.splice(removeIndex, 1);
     return res.status(200).json("deleted");
