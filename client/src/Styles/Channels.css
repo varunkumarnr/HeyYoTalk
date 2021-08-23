@@ -1,0 +1,19 @@
+.channels-container {
+  display: flex;
+  width: 240px;
+  height: 100vh;
+  background-color: #26252b;
+  flex-direction: column;
+  /* align-content: flex-start;
+  align-items: center; */
+  margin: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+/* channel list*/
+.text-channels-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}

@@ -60,7 +60,7 @@ export const getServerById = id => async dispatch => {
     const res = await axios.get(URL + `/api/server/view/${id}`);
     dispatch({
       type: GET_SERVER_BY_ID,
-      payload: res.data
+      payload: res.data.data
     });
   } catch (err) {
     console.log(err.message);

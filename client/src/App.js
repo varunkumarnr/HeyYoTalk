@@ -23,7 +23,11 @@ function App() {
           <Switch>
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
-            <Route path='/channels' component={MainPage} />
+            <Route
+              path='/channels/:guild_id/:channel_id'
+              component={MainPage}
+            />
+            <Route path='/channels/@me' component={MainPage} />
           </Switch>
         </Router>
       </Provider>

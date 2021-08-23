@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import ServerModal from "./ServerModal";
+
 import { Link, useParams } from "react-router-dom";
 import Logo from "../../images/logo.png";
 import { getUserServers } from "../../actions/server";
@@ -25,7 +27,7 @@ const ServerList = ({ getUserServers, server: { loading, guilds } }) => {
       </div>
       <span className='divider'></span>
       <div className='userserverList'>
-        {guilds.map((guild) => {
+        {guilds.map(guild => {
           // const isActive = serverId?serverId === guild._id;
           // active code to be done
           return (
@@ -50,15 +52,16 @@ const ServerList = ({ getUserServers, server: { loading, guilds } }) => {
         <p className='create-server-icon'>+</p>
         <ServerTooltip text='create or join new server' />
       </button>
+      <ServerModal />
     </div>
   );
 };
 
 ServerList.propTypes = {
   getUserServers: PropTypes.func.isRequired,
-  server: PropTypes.object.isRequired,
+  server: PropTypes.object.isRequired
 };
-const mapStateToprops = (state) => ({
-  server: state.server,
+const mapStateToprops = state => ({
+  server: state.server
 });
 export default connect(mapStateToprops, { getUserServers })(ServerList);

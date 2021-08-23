@@ -1,10 +1,10 @@
 import React from "react";
+import { SideBar } from "../Components/SideBar";
 // import ServerList from "../Components/Server/ServerList";
-import { Server } from "../Components/Server";
 export const MainPage = () => {
   return (
-    <div>
-      <Server />
+    <div className='main-container'>
+      <SideBar />
     </div>
   );
 };
