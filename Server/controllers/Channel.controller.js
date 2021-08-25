@@ -26,7 +26,7 @@ const createChannel = async (req, res) => {
     //   channel_name: channel_name
     // });
     // await newChannel.save();
-    let server = await Server.findOneAndUpdate({
+    let server = await Server.findOne({
       _id: currentServerId,
     }).then(async (rServer) => {
       const numberOfChannels = rServer.channels.length;

@@ -12,10 +12,10 @@ const ServerModal = ({ error, guild, createServer, joinServer }) => {
   const [name, setName] = useState("");
   const [type, setType] = useState("null");
   const modified = name.replace(/^\s+|\s+$/g, " ");
-  useEffect(() => {
-    console.log(type);
-  }, [type, name]);
-  const onSubmit = async e => {
+  // useEffect(() => {
+  //   console.log(type);
+  // }, [type, name]);
+  const onSubmit = async (e) => {
     e.preventDefault();
     setState("loading");
     let data;
@@ -75,7 +75,7 @@ const ServerModal = ({ error, guild, createServer, joinServer }) => {
                 <label htmlFor='name'>Server Name</label>
                 <input
                   value={name}
-                  onChange={e => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   type='text'
                   className='form_input'
                 />
@@ -107,7 +107,7 @@ const ServerModal = ({ error, guild, createServer, joinServer }) => {
                 <label htmlFor='name'>Invite code</label>
                 <input
                   value={name}
-                  onChange={e => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   type='text'
                   className='form_input'
                 />
@@ -141,12 +141,12 @@ ServerModal.propTypes = {
   error: PropTypes.object,
   guild: PropTypes.object,
   createServer: PropTypes.func.isRequired,
-  joinServer: PropTypes.func.isRequired
+  joinServer: PropTypes.func.isRequired,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   // user: state.auth.user,
   error: state.server.error,
-  guild: state.server.guild
+  guild: state.server.guild,
 });
 export default connect(mapStateToProps, { createServer, joinServer })(
   ServerModal
