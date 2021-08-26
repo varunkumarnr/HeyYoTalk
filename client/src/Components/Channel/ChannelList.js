@@ -5,18 +5,20 @@ import { Link, useParams } from "react-router-dom";
 import { getServerById } from "../../actions/server";
 import {
   FetchChannelById,
-  FetchAllChannelsOfServer,
+  FetchAllChannelsOfServer
 } from "../../actions/channels";
+import { openModal } from "../../util/Util";
 import { ChannelTilte } from "./ChannelTilte";
 import "../../Styles/Channels.css";
 import { ChannelItem } from "./ChannelItem";
+import ChannelModel from "./ChannelModel";
 const ChannelList = ({
   getServerById,
   FetchChannelById,
   FetchAllChannelsOfServer,
   server: { loading, guilds, guild },
   channel,
-  auth: { user },
+  auth: { user }
 }) => {
   let { guild_id } = useParams();
   let { channel_id } = useParams();
@@ -49,7 +51,12 @@ const ChannelList = ({
       <div className='channels-list'>
         <div className='text-channels-container'>
           <div className='text-channel-text'>TEXT CHANNELS</div>
-          <div className='add-channel-icon'>+</div>
+          <button
+            onClick={() => openModal("create-channel-model")}
+            className='add-channel-icon'
+          >
+            +
+          </button>
         </div>
         <div className='all-server-channels'>
           {channels.map((channel, idx) => (
@@ -108,6 +115,7 @@ const ChannelList = ({
           Logout
         </a>
       </div>
+      <ChannelModel />
     </div>
   );
 };
@@ -118,15 +126,15 @@ ChannelList.propTypes = {
   FetchAllChannelsOfServer: PropTypes.func.isRequired,
   server: PropTypes.object.isRequired,
   channel: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   server: state.server,
   channel: state.channel,
-  auth: state.auth,
+  auth: state.auth
 });
 export default connect(mapStateToProps, {
   getServerById,
   FetchChannelById,
-  FetchAllChannelsOfServer,
+  FetchAllChannelsOfServer
 })(ChannelList);
