@@ -23,4 +23,19 @@ app.use("/api/user", userRoute);
 app.use("/api/server", serverRoute);
 app.use("/api/server", channelRoute);
 app.use("/api/server", MessageRoute);
-app.listen(PORT, () => console.log(`the server is running at ${PORT}`));
+
+// socket
+
+const server = app.listen(PORT, () =>
+  console.log(`the server is running at ${PORT}`)
+);
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: ["http://localhost:3000", "https://hey-yo-talk.vercel.app"]
+  }
+});
+const connectedUsers = {};
+io.on("connection", socket => {
+  console.log("a user connected");
+});
