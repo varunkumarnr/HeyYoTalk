@@ -17,7 +17,6 @@ export const createChannel = (name, serverId) => async dispatch => {
     };
     // console.log(name);
     const body = JSON.stringify({ channel_name: name });
-
     const res = await axios.post(
       URL + `/api/server/${serverId}/channel/new`,
       body,

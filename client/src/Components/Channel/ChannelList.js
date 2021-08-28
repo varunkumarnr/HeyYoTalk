@@ -12,7 +12,7 @@ import { ChannelTilte } from "./ChannelTilte";
 import "../../Styles/Channels.css";
 import { ChannelItem } from "./ChannelItem";
 import ChannelModel from "./ChannelModel";
-import { io } from "socket.io-client";
+
 const ChannelList = ({
   getServerById,
   FetchChannelById,
@@ -25,15 +25,14 @@ const ChannelList = ({
   let { channel_id } = useParams();
   const [channels, setChannels] = useState(channel.channels);
   const [currentChannelName, setCurrentChannelName] = useState("general");
-  const [socket, setsocket] = useState(null);
   // const findChannel =
   //   ((id) => {
   //     return channels.find((ch) => ch._id === id);
   //   },
   //   [channels]);
-  useEffect(() => {
-    setsocket(io("ws://localhost:5000"));
-  }, []);
+  // useEffect(() => {
+  //   console.log(socket);
+  // }, []);
   useEffect(() => {
     FetchAllChannelsOfServer(guild_id);
     getServerById(guild_id);

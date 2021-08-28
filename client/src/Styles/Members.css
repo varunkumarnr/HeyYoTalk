@@ -1,0 +1,8 @@
+.test {
+  background: #2f3135;
+  box-sizing: border-box;
+  color: #8e9197;
+  min-width: 15rem;
+  max-width: 20rem;
+  padding-top: 0;
+}
