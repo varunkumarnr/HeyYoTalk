@@ -54,6 +54,7 @@ const sendMessages = async (req, res) => {
       channelId: CurrentChannelId,
       EventType: EventType.MESSAGE
     });
+
     let message = await chat.save();
     return res.status(200).json({ success: true, data: chat });
   } catch (err) {

@@ -6,25 +6,59 @@ import { FetchMessages, sendMessage } from "../../actions/message";
 import { connect } from "react-redux";
 import { FetchChannelById } from "../../actions/channels";
 import "../../Styles/Message.css";
+
 const MessagesList = ({
   message: { messages },
   FetchMessages,
   sendMessage,
+  auth: { user },
   FetchChannelById,
   channel: { channell, channels }
 }) => {
   const [channelName, setChannelName] = useState();
-
+  const [allMessages, setAllMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [arriavalMessage, setArrivalMessage] = useState(null);
   let { guild_id } = useParams();
   let { channel_id } = useParams();
   useEffect(() => {
     FetchChannelById(guild_id, channel_id);
   }, [channel_id, FetchChannelById, guild_id]);
-  // useEffect(() => {
-  //   channell && setChannelName(channell.channel_name);
-  // }, [channell.channel_name, setChannelName, channell]);
+  // useEffect(()=> {
+  //   socket.on("getMessage")
+  // },[])
+  const onChange = e => {
+    setMessage(e.target.value);
+  };
+  const onSubmit = async e => {
+    e.preventDefault();
+    user &&
+      (await socket.emit("sendmessage", {
+        senderId: user._id,
+        text: message,
+        channelId: channel_id
+      }));
+
+    await socket.emit("getmessages", {
+      channelId: channel_id
+    });
+    // await socket.on("messages", data => {
+    //   setAllMessages(data);
+    //   console.log(data);
+    // });
+    setMessage("");
+  };
   useEffect(() => {
-    FetchMessages(guild_id, channel_id);
+    socket.on("messages", data => {
+      setAllMessages(data);
+      // console.log(data);
+    });
+  }, [setAllMessages]);
+  useEffect(() => {
+    FetchMessages(guild_id, channel_id).then(data => {
+      setAllMessages(data);
+      // console.log(data);
+    });
   }, [guild_id, channel_id, FetchMessages]);
   return (
     <div className='channel-messages-index'>
@@ -56,8 +90,7 @@ const MessagesList = ({
             alt=''
           />
           <div className='welcome-to-channel'>
-            Welcome to the beginning of the {channell && channell.channel_name}{" "}
-            channel.
+            Welcome to {channell && channell.channel_name} channel.
           </div>
           <img
             className='welcome-to-channel-img-right'
@@ -65,8 +98,8 @@ const MessagesList = ({
             alt=''
           />
         </div>
-        {messages.length > 0 ? (
-          messages.map((msg, idx) => {
+        {allMessages.length > 0 ? (
+          allMessages.map((msg, idx) => {
             return (
               <div className='message-index-width' key={idx}>
                 <div className='message-width-container'>
@@ -103,15 +136,19 @@ const MessagesList = ({
         )}
       </div>
       <div className='channel-messages-index-footer'>
-        <form className='channel-message-input-form'>
+        <form
+          className='channel-message-input-form'
+          onSubmit={e => onSubmit(e)}
+        >
           {/* <label className='message-image-upload'>
             +
             <input type='file' />
           </label> */}
           <input
             className='channel-message-input'
-            // value={this.state.body}
-            // onChange={this.update()}
+            name='text'
+            value={message}
+            onChange={e => onChange(e)}
             type='text'
             placeholder={`Message #${channell && channell.channel_name}`}
           />
@@ -130,7 +167,8 @@ MessagesList.propTypes = {
 };
 const mapStateToProps = state => ({
   message: state.message,
-  channel: state.channel
+  channel: state.channel,
+  auth: state.auth
 });
 export default connect(mapStateToProps, {
   FetchMessages,

@@ -18,7 +18,6 @@ const messageSchema = new Schema({
   },
   event_type: {
     type: Number,
-    required: true,
     default: EventType.MESSAGE
   },
   TimeStamp: {

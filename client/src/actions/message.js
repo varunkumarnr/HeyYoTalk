@@ -16,6 +16,7 @@ export const FetchMessages = (serverId, channelId) => async dispatch => {
     payload: res.data.data
   });
   // console.log(res.data.data);
+  return res.data.data;
 };
 export const sendMessage = (serverId, channelId, message) => async dispatch => {
   const config = {
