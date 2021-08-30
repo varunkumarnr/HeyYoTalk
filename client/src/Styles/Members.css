@@ -1,8 +1,17 @@
-.test {
+.member-container {
   background: #2f3135;
   box-sizing: border-box;
   color: #8e9197;
   min-width: 15rem;
   max-width: 20rem;
   padding-top: 0;
+}
+.owner-logo {
+  height: 14px;
+  width: 14px;
+}
+.owner-data-pfp > img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }

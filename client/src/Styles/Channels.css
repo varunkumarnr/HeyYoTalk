@@ -80,14 +80,18 @@
 .add-channel-icon {
   align-items: center;
   display: flex;
-  min-height: 3rem;
-  max-height: 3rem;
-  font-size: 30px;
+  min-height: 2rem;
+  max-height: 2rem;
+  font-size: 20px;
   border-bottom: 1px solid #232329;
   overflow: hidden;
+  border: none;
+  cursor: pointer;
+  background-color: #26252b;
+  color: #8e9297;
 }
 .add-channel-icon:hover {
-  background-color: #34373c;
+  color: #fff;
 }
 .all-server-channels {
   width: 100%;
