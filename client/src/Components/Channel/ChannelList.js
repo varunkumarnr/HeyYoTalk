@@ -12,7 +12,6 @@ import { ChannelTilte } from "./ChannelTilte";
 import "../../Styles/Channels.css";
 import { ChannelItem } from "./ChannelItem";
 import ChannelModel from "./ChannelModel";
-
 const ChannelList = ({
   getServerById,
   FetchChannelById,

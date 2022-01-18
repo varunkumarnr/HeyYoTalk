@@ -249,5 +249,4 @@ const logout = async (req, res) => {
 };
 // to do
 // update
-
 module.exports = { signUp, Login, getUser, getUsers, me, userServers, logout };

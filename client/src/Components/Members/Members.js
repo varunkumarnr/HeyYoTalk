@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getServerById } from "../../actions/server";
 import Owner from "../../images/owner.svg";
+import Moderator from "../../images/emblem.png";
 const Members = ({ getServerById, server: { guild, loading } }) => {
   const [serverOwner, setServerOwner] = useState("");
   useEffect(() => {
@@ -30,7 +31,26 @@ const Members = ({ getServerById, server: { guild, loading } }) => {
           </div>
         </div>
       )}
-      {guild.admin && <div> admins </div>}
+
+      <div>
+        {" "}
+        <p> Server Admins </p>
+        {guild.admin.map((admin, idx) => {
+          return (
+            <div>
+              <div className='owner-data-pfp'>
+                <img src={admin.profle_picture} alt='admin' />
+              </div>
+              <div>
+                {admin.username}
+                <span>
+                  <img className='owner-logo' src={Moderator} alt='moderator' />
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
